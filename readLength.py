@@ -20,7 +20,7 @@ def loop_files(dir_path):
     os.chdir(dir_path)
     dir_duration = timedelta(0)
     dir_count = 0
-    file_type = [".flv", ".mp4", ".mov"]    
+    file_type = [".flv", ".mp4", ".mov", ".jpg"]    
     record_file.write("Folder Path:%s\n" % dir_path)
     
     for f in sorted(os.listdir(dir_path)):           
@@ -28,20 +28,23 @@ def loop_files(dir_path):
             if val in f:
                 file_count += 1
                 dir_count += 1
-                video_length = getLength(f)
-                x = video_length.split(":")
-                total_time += timedelta(hours=int(x[0]), minutes=int(x[1]), seconds=int(x[2]))
-                dir_duration += timedelta(hours=int(x[0]), minutes=int(x[1]), seconds=int(x[2]))        
-                record_file.write("{0}\t{1}\n".format(f,video_length))
+                if file_type != ".jpg":
+                    video_length = getLength(f)
+                    x = video_length.split(":")
+                    total_time += timedelta(hours=int(x[0]), minutes=int(x[1]), seconds=int(x[2]))
+                    dir_duration += timedelta(hours=int(x[0]), minutes=int(x[1]), seconds=int(x[2]))        
+                    record_file.write("{0}\t{1}\n".format(f,video_length))
+                else:
+                    record_file.write("{0}\t\n".format(f))
                 #print(f)
                 #print(video_length)
     record_file.write("Folder Files:%s\n" % str(dir_count))
     record_file.write("Folder Duration:%s\n\n" % str(dir_duration))
 
-    
+
 def date_to_folder(date):
     time_str = date.strftime("%Y-%m-%d").split("-")
-    time_folder = time_str[0] + "\\"+ time_str[1] + "-"+ time_str[0] + "\\"+ time_str[1] + time_str[2]
+    time_folder = time_str[0] + "\\"+ time_str[1] + "\\" + time_str[2]
     return time_folder
 
 
@@ -49,10 +52,10 @@ def check_next_month():
     next_month = (datetime.now() + timedelta(days=30)).strftime("%Y-%m").split("-")
 
     try:
-        test_path = "\\\\vdisk.chineseradio.local\\VideoWork\\OtherVideos\\STPlayer\\Source\\"+ next_month[0] + "\\"+ next_month[1] + "-" + next_month[0]
+        test_path = "\\\\vdisk.chineseradio.local\\VideoWork\\OtherVideos\\STPlayer\\Source\\STPlayerLog\\"+ next_month[0]
     except:
         os.system("pause")
-        error = input("LOG地址错误")    
+        error = input("next month地址错误")    
         exit()
     
     if not os.path.exists(test_path):
@@ -62,8 +65,11 @@ def check_next_month():
         while cur_mon == start_mon:
             fold_str = date_to_folder(start_date)
             for i in range(1,9):
-                dir_path = "\\\\vdisk.chineseradio.local\\VideoWork\\OtherVideos\\STPlayer\\Source\\"+ fold_str +"\\segment_0"+ str(i)                
-                os.makedirs(dir_path)
+                dir_path = "\\\\vdisk.chineseradio.local\\VideoWork\\OtherVideos\\STPlayer\\Source\\"+ fold_str +"\\segment_0"+ str(i)
+                try:
+                    os.makedirs(dir_path)
+                except:
+                    pass
             start_date = start_date + timedelta(days=1)
             cur_mon = int(start_date.strftime("%m"))
         print("Next Month Video Folders Created")
