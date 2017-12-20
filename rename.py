@@ -21,7 +21,7 @@ def rename(path, time_str):#time_str[0]: year, time_str[1]:month, time_str[2]:da
                 continue
             filename=os.path.splitext(files)[0]#文件名
             filetype=os.path.splitext(files)[1]#文件扩展名
-            if files == time_str[2]+"00.flv" or files == time_str[2]+"99.flv" or (re.search('.jpg?',files) is not None):
+            if files == time_str[2]+"00.flv" or files == time_str[2]+"99.flv" or (re.search('.jpg?',files) is not None): 
                 continue
             elif files == "00.flv" or files == "99.flv":
                 Newdir=os.path.join(path,time_str[2]+filename+filetype)
