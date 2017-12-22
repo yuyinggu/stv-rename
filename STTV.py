@@ -63,7 +63,7 @@ def loop_files(dir_path):
     global total_time, file_count    
     os.chdir(dir_path)
     dir_duration = timedelta(0)
-    dir_count =".jpg",".flv", ".mp4",  ".mov"]    
+    dir_count =[".jpg",".flv", ".mp4",  ".mov"]    
     record_file.write("Folder Path:%s\n" % dir_path)
     
     for f in sorted(os.listdir(dir_path)):           
