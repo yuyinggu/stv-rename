@@ -10,7 +10,7 @@ this_year = (datetime.now()).strftime("%Y")
 def options1():
     today_folder, timeStr = date_to_folder(datetime.now(),True)
     for i in range(1,9):
-        path="\\\\vdisk.chineseradio.local\\VideoWork\\OtherVideos\\STPlayer\\Source\\"+ today_folder +"\\segment_0"+str(i)        
+        path="\\\\vdisk.chineseradio.local\\VideoWork\\OtherVideos\\STPlayer\\Source\\Done\\"+ today_folder +"\\segment_0"+str(i)        
         if not os.path.exists(path):
             os.makedirs(path)           
         rename(path,timeStr)
